@@ -1,19 +1,20 @@
-const express = require("express");
+import express from "express";
+import bodyParser from "body-parser";
+import postsRoute from "./routes/postsRoute.js";
+import mongoose from 'mongoose';
+import 'dotenv/config'
+
 const app = express();
-const dotenv = require("dotenv").config();
 const port = process.env.PORT;
 
-const mongoose = require("mongoose");
 mongoose.connect(process.env.DB_CONNECT);
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to database"));
 
-const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const postsRoute = require("./routes/postsRoute");
 app.use("/posts", postsRoute);
 
 app.listen(port, () => {

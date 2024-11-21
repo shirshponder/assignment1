@@ -39,9 +39,3 @@ export const createPost = async (req, res) => {
     res.status(status.BAD_REQUEST).send(error.message);
   }
 };
-
-// module.exports = {
-//   getAllPosts,
-//   createPost,
-//   getPostById,
-// };

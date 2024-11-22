@@ -22,3 +22,13 @@ Content-Type: application/json
     "content": "Shir is the best2"
 }
 
+###
+
+PUT http://localhost:3000/posts/6740a2e5c8eb7cf50c7d9d99
+Content-Type: application/json
+
+{
+    "title": "update title1",
+    "sender": "moshe",
+    "content": "update content"
+}

@@ -5,11 +5,11 @@ GET http://localhost:3000/posts
 
 ###
 
-GET http://localhost:3000/posts?owner=Michali
+GET http://localhost:3000/posts?sender=Michali
 
 ###
 
-GET http://localhost:3000/posts/6734b0c818a1cf8344804554
+GET http://localhost:3000/posts/6740a2e5c8eb7cf50c7d9d99
 
 ###
 
@@ -17,8 +17,8 @@ POST http://localhost:3000/posts
 Content-Type: application/json
 
 {
-    "title": "Hello Shir",
-    "owner": "Michali",
-    "content": "Shir is the best"
+    "title": "Hello Shir2",
+    "sender": "Michali2",
+    "content": "Shir is the best2"
 }
 

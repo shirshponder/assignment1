@@ -40,7 +40,7 @@ export const getCommentById = async (req, res) => {
   try {
     const comment = await commentsModel.findById(commentId);
     if (comment) {
-      res.send(comment);
+      res.status(status.OK).send(comment);
     } else {
       res.status(status.NOT_FOUND).send('Comment not found');
     }

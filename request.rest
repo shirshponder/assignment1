@@ -62,4 +62,4 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3000/comments/post/6741ea05cfc2902388b0da1f
+GET http://localhost:3000/comments?postId=673f939254f16b4155f3c189

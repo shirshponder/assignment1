@@ -23,7 +23,7 @@ export const updateCommentById = async (req, res) => {
       commentBody,
       {
         returnDocument: 'after',
-      },
+      }
     );
     if (comment) {
       res.send(comment);
@@ -35,25 +35,21 @@ export const updateCommentById = async (req, res) => {
   }
 };
 
-export const getAllComments = async (_, res) => {
+export const getComments = async (req, res) => {
   try {
-    const comments = await commentsModel.find();
-    res.send(comments);
-  } catch (error) {
-    res.status(status.BAD_REQUEST).send(error.message);
-  }
-};
+    const postId = req.query.postId;
 
-export const getCommentsByPost = async (req, res) => {
-  const postId = req.params.id;
-
-  try {
-    const post = await postModel.findById(postId);
-    if (post) {
-      const comments = await commentsModel.find({ postId });
-      res.status(status.OK).send(comments);
+    if (postId) {
+      const post = await postModel.findById(postId);
+      if (post) {
+        const comments = await commentsModel.find({ postId });
+        res.status(status.OK).send(comments);
+      } else {
+        res.status(status.NOT_FOUND).send('Post not found');
+      }
     } else {
-      res.status(status.NOT_FOUND).send('Post not found');
+      const comments = await commentsModel.find();
+      res.status(status.OK).send(comments);
     }
   } catch (error) {
     res.status(status.BAD_REQUEST).send(error.message);

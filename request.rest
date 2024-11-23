@@ -59,3 +59,7 @@ Content-Type: application/json
     "sender": "Michali2",
     "content": "new commentsssssssssss"
 }
+
+###
+
+GET http://localhost:3000/comments/post/6741ea05cfc2902388b0da1f

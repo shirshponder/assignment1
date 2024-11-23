@@ -3,13 +3,16 @@ import {
   createComment,
   getAllComments,
   updateCommentById,
+  getCommentsByPost,
 } from '../controllers/commentsController.js';
 
 const router = Router();
 
-router.post('/', createComment);
-
 router.get('/', getAllComments);
+
+router.get('/post/:id', getCommentsByPost);
+
+router.post('/', createComment);
 
 router.put('/:id', updateCommentById);
 

@@ -15,7 +15,7 @@ export const createComment = async (req, res) => {
 export const getAllComments = async (req, res) => {
   try {
     const comments = await commentsModel.find();
-    res.send(comments);
+    res.status(status.OK).send(comments);
   } catch (error) {
     res.status(status.BAD_REQUEST).send(error.message);
   }

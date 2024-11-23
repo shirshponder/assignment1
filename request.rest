@@ -39,7 +39,13 @@ POST http://localhost:3000/comments
 Content-Type: application/json
 
 {
-    "postId": "6741e9f8cfc2902388b0da1b",
-    "sender": "Michali2",
-    "content": "new comment"
+    "postId": "673f939e54f16b4155f3c18b",
+    "sender": "Michali",
+    "content": "bla"
 }
+
+###
+
+GET http://localhost:3000/comments
+
+###

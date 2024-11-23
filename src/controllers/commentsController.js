@@ -11,3 +11,12 @@ export const createComment = async (req, res) => {
     res.status(status.BAD_REQUEST).send(error.message);
   }
 };
+
+export const getAllComments = async (req, res) => {
+  try {
+    const comments = await commentsModel.find();
+    res.send(comments);
+  } catch (error) {
+    res.status(status.BAD_REQUEST).send(error.message);
+  }
+};

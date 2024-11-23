@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import postModel from './postsModel';
+import postModel from './postsModel.js';
 
 const commentSchema = new Schema({
   postId: {

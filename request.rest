@@ -17,8 +17,18 @@ POST http://localhost:3000/posts
 Content-Type: application/json
 
 {
-    "title": "123",
-    "sender": "Michali",
-    "content": "123"
+    "title": "Hello Shir2",
+    "sender": "Michali2",
+    "content": "Shir is the best2"
 }
 
+###
+
+PUT http://localhost:3000/posts/6740a2e5c8eb7cf50c7d9d99
+Content-Type: application/json
+
+{
+    "title": "update title1",
+    "sender": "moshe",
+    "content": "update content"
+}

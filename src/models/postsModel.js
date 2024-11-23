@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const postSchema = new Schema({
   title: {
@@ -12,6 +12,6 @@ const postSchema = new Schema({
   },
 });
 
-const postModel = model("posts", postSchema);
+const postModel = model('posts', postSchema);
 
 export default postModel;

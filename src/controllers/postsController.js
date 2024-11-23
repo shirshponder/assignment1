@@ -21,6 +21,7 @@ export const getPosts = async (req, res) => {
 
 export const getPostById = async (req, res) => {
   const postId = req.params.id;
+
   try {
     const post = await postModel.findById(postId);
     if (post) {
@@ -35,9 +36,28 @@ export const getPostById = async (req, res) => {
 
 export const createPost = async (req, res) => {
   const postBody = req.body;
+
   try {
     const post = await postModel.create(postBody);
     res.status(status.CREATED).send(post);
+  } catch (error) {
+    res.status(status.BAD_REQUEST).send(error.message);
+  }
+};
+
+export const updatePostById = async (req, res) => {
+  const postId = req.params.id;
+  const postBody = req.body;
+
+  try {
+    const post = await postModel.findByIdAndUpdate({ _id: postId }, postBody, {
+      returnDocument: "after",
+    });
+    if (post) {
+      res.send(post);
+    } else {
+      res.status(status.NOT_FOUND).send("Post not found");
+    }
   } catch (error) {
     res.status(status.BAD_REQUEST).send(error.message);
   }

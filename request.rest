@@ -54,3 +54,7 @@ Content-Type: application/json
     "sender": "Michali2",
     "content": "new commentsssssssssss"
 }
+
+###
+
+DELETE http://localhost:3000/comments/6741f1bc669e2136817b3ca9

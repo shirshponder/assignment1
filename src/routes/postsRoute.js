@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import {
-  getAllPosts,
+  getPosts,
   getPostById,
   createPost,
   updatePostById,
 } from '../controllers/postsController.js';
 
 const router = Router();
-router.get('/', getAllPosts);
+
+router.get('/', getPosts);
 
 router.get('/:id', getPostById);
 

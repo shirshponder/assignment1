@@ -1,17 +1,11 @@
 import status from 'http-status';
 import postModel from '../models/postsModel.js';
 
-export const getAllPosts = async (req, res) => {
-  const filter = req.query.sender;
-
+export const getPosts = async (req, res) => {
   try {
-    if (filter) {
-      const posts = await postModel.find({ sender: filter });
-      res.send(posts);
-    } else {
-      const posts = await postModel.find();
-      res.send(posts);
-    }
+    const senderId = req.query.sender;
+    const posts = await postModel.find(senderId && { sender: senderId });
+    res.status(status.OK).send(posts);
   } catch (error) {
     res.status(status.BAD_REQUEST).send(error.message);
   }

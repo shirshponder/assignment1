@@ -9,7 +9,7 @@ GET http://localhost:3000/posts?sender=Michali
 
 ###
 
-GET http://localhost:3000/posts/6740a2e5c8eb7cf50c7d9d99
+GET http://localhost:3000/posts/673f93a854f16b4155f3c18d
 
 ###
 

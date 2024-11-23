@@ -7,9 +7,7 @@ export const getPosts = async (req, res) => {
     const posts = await postModel.find(senderId && { sender: senderId });
     res.status(status.OK).send(posts);
   } catch (error) {
-    res
-      .status(status.BAD_REQUEST)
-      .send({ status: 'fail', message: error.message });
+    res.status(status.BAD_REQUEST).send(error.message);
   }
 };
 

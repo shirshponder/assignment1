@@ -33,3 +33,12 @@ export const updateCommentById = async (req, res) => {
     res.status(status.BAD_REQUEST).send(error.message);
   }
 };
+
+export const getAllComments = async (req, res) => {
+  try {
+    const comments = await commentsModel.find();
+    res.status(status.OK).send(comments);
+  } catch (error) {
+    res.status(status.BAD_REQUEST).send(error.message);
+  }
+};

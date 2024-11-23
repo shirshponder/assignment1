@@ -32,3 +32,14 @@ Content-Type: application/json
     "sender": "moshe",
     "content": "update content"
 }
+
+###
+
+POST http://localhost:3000/comments
+Content-Type: application/json
+
+{
+    "postId": "6741e9f8cfc2902388b0da1b",
+    "sender": "Michali2",
+    "content": "new comment"
+}

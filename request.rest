@@ -43,3 +43,14 @@ Content-Type: application/json
     "sender": "Michali2",
     "content": "new comment"
 }
+
+###
+
+PUT http://localhost:3000/comments/6741f1bc669e2136817b3ca9
+Content-Type: application/json
+
+{
+    "postId": "6741e9f8cfc2902388b0da1b",
+    "sender": "Michali2",
+    "content": "new commentsssssssssss"
+}

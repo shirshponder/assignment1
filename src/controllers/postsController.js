@@ -4,14 +4,7 @@ import postModel from '../models/postsModel.js';
 export const getPosts = async (req, res) => {
   try {
     const senderId = req.query.sender;
-    var searchQuery;
-
-    if (senderId) {
-      searchQuery = { sender: senderId };
-    }
-
-    const posts = await postModel.find(searchQuery);
-
+    const posts = await postModel.find(senderId && { sender: senderId });
     res.status(status.OK).send(posts);
   } catch (error) {
     res

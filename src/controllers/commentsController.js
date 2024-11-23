@@ -1,5 +1,6 @@
 import status from 'http-status';
 import commentsModel from '../models/commentsModel.js';
+import postModel from '../models/postsModel.js';
 
 export const createComment = async (req, res) => {
   const commentBody = req.body;
@@ -57,7 +58,7 @@ export const deleteCommentById = async (req, res) => {
       { _id: commentId },
       {
         returnDocument: 'after',
-      },
+      }
     );
 
     if (comment) {
@@ -70,12 +71,23 @@ export const deleteCommentById = async (req, res) => {
   }
 };
 
-export const getAllComments = async (req, res) => {
+export const getComments = async (req, res) => {
   try {
-    const comments = await commentsModel.find();
-    res.status(status.OK).send(comments);
+    const postId = req.query.postId;
+
+    if (postId) {
+      const post = await postModel.findById(postId);
+      if (post) {
+        const comments = await commentsModel.find({ postId });
+        res.status(status.OK).send(comments);
+      } else {
+        res.status(status.NOT_FOUND).send('Post not found');
+      }
+    } else {
+      const comments = await commentsModel.find();
+      res.status(status.OK).send(comments);
+    }
   } catch (error) {
     res.status(status.BAD_REQUEST).send(error.message);
   }
 };
-

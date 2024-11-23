@@ -2,8 +2,9 @@ import status from 'http-status';
 import postModel from '../models/postsModel.js';
 
 export const getPosts = async (req, res) => {
+  const senderId = req.query.sender;
+
   try {
-    const senderId = req.query.sender;
     const posts = await postModel.find(senderId && { sender: senderId });
     res.status(status.OK).send(posts);
   } catch (error) {
@@ -17,7 +18,7 @@ export const getPostById = async (req, res) => {
   try {
     const post = await postModel.findById(postId);
     if (post) {
-      res.send(post);
+      res.status(status.OK).send(post);
     } else {
       res.status(status.NOT_FOUND).send('Post not found');
     }
@@ -46,7 +47,7 @@ export const updatePostById = async (req, res) => {
       returnDocument: 'after',
     });
     if (post) {
-      res.send(post);
+      res.status(status.OK).send(post);
     } else {
       res.status(status.NOT_FOUND).send('Post not found');
     }

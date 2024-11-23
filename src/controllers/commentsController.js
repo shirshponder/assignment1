@@ -25,7 +25,7 @@ export const updateCommentById = async (req, res) => {
       }
     );
     if (comment) {
-      res.send(comment);
+      res.status(status.OK).send(comment);
     } else {
       res.status(status.NOT_FOUND).send('Comment not found');
     }
@@ -48,3 +48,34 @@ export const getCommentById = async (req, res) => {
     res.status(status.BAD_REQUEST).send(error.message);
   }
 };
+
+export const deleteCommentById = async (req, res) => {
+  const commentId = req.params.id;
+
+  try {
+    const comment = await commentsModel.findByIdAndDelete(
+      { _id: commentId },
+      {
+        returnDocument: 'after',
+      },
+    );
+
+    if (comment) {
+      res.status(status.OK).send(comment);
+    } else {
+      res.status(status.NOT_FOUND).send('Comment not found');
+    }
+  } catch (error) {
+    res.status(status.BAD_REQUEST).send(error.message);
+  }
+};
+
+export const getAllComments = async (req, res) => {
+  try {
+    const comments = await commentsModel.find();
+    res.status(status.OK).send(comments);
+  } catch (error) {
+    res.status(status.BAD_REQUEST).send(error.message);
+  }
+};
+

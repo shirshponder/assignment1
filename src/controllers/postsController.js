@@ -18,7 +18,7 @@ export const getPostById = async (req, res) => {
   try {
     const post = await postModel.findById(postId);
     if (post) {
-      res.send(post);
+      res.status(status.OK).send(post);
     } else {
       res.status(status.NOT_FOUND).send('Post not found');
     }
@@ -47,7 +47,7 @@ export const updatePostById = async (req, res) => {
       returnDocument: 'after',
     });
     if (post) {
-      res.send(post);
+      res.status(status.OK).send(post);
     } else {
       res.status(status.NOT_FOUND).send('Post not found');
     }

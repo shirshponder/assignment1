@@ -4,6 +4,7 @@ import {
   deleteCommentById,
   getAllComments,
   updateCommentById,
+  getCommentById,
 } from '../controllers/commentsController.js';
 
 const router = Router();
@@ -14,6 +15,9 @@ router.get('/', getAllComments);
 
 router.put('/:id', updateCommentById);
 
+router.get('/:id', getCommentById);
+
 router.delete('/:id', deleteCommentById);
+
 
 export default router;

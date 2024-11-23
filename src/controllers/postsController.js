@@ -2,8 +2,9 @@ import status from 'http-status';
 import postModel from '../models/postsModel.js';
 
 export const getPosts = async (req, res) => {
+  const senderId = req.query.sender;
+
   try {
-    const senderId = req.query.sender;
     const posts = await postModel.find(senderId && { sender: senderId });
     res.status(status.OK).send(posts);
   } catch (error) {

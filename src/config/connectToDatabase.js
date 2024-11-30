@@ -11,5 +11,3 @@ export const connectDatabase = async () => {
     console.error('Database connection error:', error);
   }
 };
-
-connectDatabase();

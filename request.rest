@@ -5,7 +5,7 @@ GET http://localhost:3000/posts
 
 ###
 
-GET http://localhost:3000/posts?sender=Michali
+GET http://localhost:3000/posts?owner=Michali
 
 ###
 
@@ -17,9 +17,9 @@ POST http://localhost:3000/posts
 Content-Type: application/json
 
 {
-    "title": "Hello Shir2",
-    "sender": "Michali2",
-    "content": "Shir is the best2"
+    "title": "Hello Shir",
+    "owner": "Michali",
+    "content": "Shir is the best"
 }
 
 ###
@@ -29,7 +29,7 @@ Content-Type: application/json
 
 {
     "title": "update title1",
-    "sender": "moshe",
+    "owner": "moshe",
     "content": "update content"
 }
 
@@ -41,7 +41,7 @@ Content-Type: application/json
 {
 
     "postId": "673f93a854f16b4155f3c18d",
-    "sender": "Shir",
+    "owner": "Shir",
     "content": "1211212"
 }
 
@@ -56,7 +56,7 @@ Content-Type: application/json
 
 {
     "postId": "6741e9f8cfc2902388b0da1b",
-    "sender": "Michali2",
+    "owner": "Michali2",
     "content": "new commentsssssssssss"
 }
 

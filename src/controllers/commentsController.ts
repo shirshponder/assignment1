@@ -1,19 +1,24 @@
 import status from 'http-status';
-import commentsModel from '../models/commentsModel.js';
-import postModel from '../models/postsModel.js';
+import { Request, Response } from 'express';
+import commentsModel from '../models/commentsModel';
+import postModel from '../models/postsModel';
 
-export const createComment = async (req, res) => {
+export const createComment = async (req: Request, res: Response) => {
   const commentBody = req.body;
 
   try {
     const comment = await commentsModel.create(commentBody);
     res.status(status.CREATED).send(comment);
   } catch (error) {
-    res.status(status.BAD_REQUEST).send(error.message);
+    if (error instanceof Error) {
+      res.status(status.BAD_REQUEST).send(error.message);
+    } else {
+      res.status(status.BAD_REQUEST).send('An unknown error occurred');
+    }
   }
 };
 
-export const updateCommentById = async (req, res) => {
+export const updateCommentById = async (req: Request, res: Response) => {
   const commentId = req.params.id;
   const commentBody = req.body;
 
@@ -31,11 +36,15 @@ export const updateCommentById = async (req, res) => {
       res.status(status.NOT_FOUND).send('Comment not found');
     }
   } catch (error) {
-    res.status(status.BAD_REQUEST).send(error.message);
+    if (error instanceof Error) {
+      res.status(status.BAD_REQUEST).send(error.message);
+    } else {
+      res.status(status.BAD_REQUEST).send('An unknown error occurred');
+    }
   }
 };
 
-export const getCommentById = async (req, res) => {
+export const getCommentById = async (req: Request, res: Response) => {
   const commentId = req.params.id;
 
   try {
@@ -46,11 +55,15 @@ export const getCommentById = async (req, res) => {
       res.status(status.NOT_FOUND).send('Comment not found');
     }
   } catch (error) {
-    res.status(status.BAD_REQUEST).send(error.message);
+    if (error instanceof Error) {
+      res.status(status.BAD_REQUEST).send(error.message);
+    } else {
+      res.status(status.BAD_REQUEST).send('An unknown error occurred');
+    }
   }
 };
 
-export const deleteCommentById = async (req, res) => {
+export const deleteCommentById = async (req: Request, res: Response) => {
   const commentId = req.params.id;
 
   try {
@@ -67,11 +80,15 @@ export const deleteCommentById = async (req, res) => {
       res.status(status.NOT_FOUND).send('Comment not found');
     }
   } catch (error) {
-    res.status(status.BAD_REQUEST).send(error.message);
+    if (error instanceof Error) {
+      res.status(status.BAD_REQUEST).send(error.message);
+    } else {
+      res.status(status.BAD_REQUEST).send('An unknown error occurred');
+    }
   }
 };
 
-export const getComments = async (req, res) => {
+export const getComments = async (req: Request, res: Response) => {
   try {
     const postId = req.query.postId;
 
@@ -88,6 +105,10 @@ export const getComments = async (req, res) => {
       res.status(status.OK).send(comments);
     }
   } catch (error) {
-    res.status(status.BAD_REQUEST).send(error.message);
+    if (error instanceof Error) {
+      res.status(status.BAD_REQUEST).send(error.message);
+    } else {
+      res.status(status.BAD_REQUEST).send('An unknown error occurred');
+    }
   }
 };

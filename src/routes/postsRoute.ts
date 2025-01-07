@@ -4,7 +4,7 @@ import {
   getPostById,
   createPost,
   updatePostById,
-} from '../controllers/postsController.js';
+} from '../controllers/postsController';
 
 const router = Router();
 

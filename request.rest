@@ -40,9 +40,9 @@ Content-Type: application/json
 
 {
 
-    "postId": "673f93a854f16b4155f3c18d",
-    "owner": "Shir",
-    "content": "1211212"
+    "postId": "677d767e1815bd58518421b6",
+    "owner": "Mich",
+    "content": "1111"
 }
 
 ###
@@ -62,12 +62,16 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3000/comments/6741f268203a3daab6a3e357
+GET http://localhost:3000/comments/677d76c31815bd58518421b8
 
 ###
 DELETE http://localhost:3000/comments/6741f251203a3daab6a3e353
 
 ###
 
-GET http://localhost:3000/comments?postId=673f939e54f16b4155f3c18b
+GET http://localhost:3000/comments?postId=677d767e1815bd58518421b6
+
+###
+
+GET http://localhost:3000/comments?owner=Mich&postId=677d767e1123815bd58518421b6
 

@@ -3,7 +3,7 @@ import postModel from './postsModel';
 
 export interface IComments {
   content: string;
-  owner: string;
+  sender: string;
   postId: {
     type: string;
     ref: string;
@@ -22,7 +22,7 @@ const commentSchema = new Schema<IComments>(
       type: String,
       required: true,
     },
-    owner: {
+    sender: {
       type: String,
       required: true,
     },

@@ -3,10 +3,10 @@ import { Request, Response } from 'express';
 import postModel from '../models/postsModel';
 
 export const getPosts = async (req: Request, res: Response) => {
-  const ownerId = req.query.owner;
+  const senderId = req.query.sender;
 
   try {
-    const posts = ownerId && (await postModel.find({ owner: ownerId }));
+    const posts = senderId && (await postModel.find({ sender: senderId }));
     res.status(status.OK).send(posts);
   } catch (error) {
     if (error instanceof Error) {

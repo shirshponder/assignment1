@@ -81,5 +81,5 @@ GET http://localhost:3000/comments?postId=677e7367323dd4d7b4fc3791
 
 ###
 
-GET http://localhost:3000/comments?owner=Mich&postId=677d767e1123815bd58518421b6
+GET http://localhost:3000/comments?sender=Mich&postId=677d767e1123815bd58518421b6
 

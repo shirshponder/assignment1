@@ -38,14 +38,13 @@ class CommentsController extends BaseController<IComments> {
       if (postId) {
         const post = await postModel.findById(postId);
         if (!post) {
-          throw { status: status.NOT_FOUND, message: 'Post not found' };
+          res.status(status.NOT_FOUND).send('Post not found');
+          return;
         }
       }
       super.getAll(req, res);
-    } catch (error: any) {
-      res
-        .status(error?.status || status.BAD_REQUEST)
-        .send(error?.message || error);
+    } catch (error) {
+      res.status(status.BAD_REQUEST).send(error);
     }
   }
 }

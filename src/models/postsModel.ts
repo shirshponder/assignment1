@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose';
 export interface IPost {
   title: string;
   content: string;
-  owner: string;
+  sender: string;
 }
 
 const postSchema = new Schema<IPost>({
@@ -12,7 +12,7 @@ const postSchema = new Schema<IPost>({
     required: true,
   },
   content: String,
-  owner: {
+  sender: {
     type: String,
     required: true,
   },

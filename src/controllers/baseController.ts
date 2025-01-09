@@ -69,6 +69,26 @@ class BaseController<T> {
       res.status(status.BAD_REQUEST).send(error);
     }
   }
+
+  async updateItem(req: Request, res: Response) {
+    const id = req.params.id;
+    const body = req.body;
+
+    try {
+      const updatedItem = await this.model.findByIdAndUpdate(
+        { _id: id },
+        body,
+        { returnDocument: 'after' }
+      );
+      if (updatedItem) {
+        res.status(status.OK).send(updatedItem);
+      } else {
+        res.status(status.NOT_FOUND).send('Item not found');
+      }
+    } catch (error) {
+      res.status(status.BAD_REQUEST).send(error);
+    }
+  }
 }
 
 export default BaseController;

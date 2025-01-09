@@ -11,6 +11,6 @@ router.post('/', postsController.create.bind(postsController));
 
 router.delete('/:id', postsController.deleteItem.bind(postsController));
 
-router.put('/:id', postsController.updatePostById.bind(postsController));
+router.put('/:id', postsController.updateItem.bind(postsController));
 
 export default router;

@@ -42,6 +42,6 @@ const commentSchema = new Schema<IComments>(
   { timestamps: true }
 );
 
-const commentModel = model('comments', commentSchema);
+const commentModel = model<IComments>('comments', commentSchema);
 
 export default commentModel;

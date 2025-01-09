@@ -2,8 +2,8 @@ import { Schema, model } from 'mongoose';
 
 export interface IPost {
   title: string;
-  content: string;
   sender: string;
+  content: string;
 }
 
 const postSchema = new Schema<IPost>({
@@ -11,13 +11,13 @@ const postSchema = new Schema<IPost>({
     type: String,
     required: true,
   },
-  content: String,
   sender: {
     type: String,
     required: true,
   },
+  content: String,
 });
 
-const postModel = model('posts', postSchema);
+const postModel = model<IPost>('posts', postSchema);
 
 export default postModel;

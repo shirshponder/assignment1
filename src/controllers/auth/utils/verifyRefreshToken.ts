@@ -38,6 +38,7 @@ export const verifyRefreshToken = async (
       throw new Error('Refresh token does not match');
     }
 
+    // remove the used refresh token
     user.refreshToken = user.refreshToken.filter(
       (token) => token !== refreshToken,
     );

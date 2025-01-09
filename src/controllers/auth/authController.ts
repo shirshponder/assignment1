@@ -58,7 +58,7 @@ export const login = async (req: Request, res: Response) => {
     }
 
     if (!process.env.TOKEN_SECRET) {
-      res.status(500).send('Server Error');
+      res.status(status.INTERNAL_SERVER_ERROR).send('Server Error');
       return;
     }
 
@@ -82,7 +82,7 @@ export const refresh = async (req: Request, res: Response) => {
   try {
     const user = await verifyRefreshToken(req.body.refreshToken);
     if (!user) {
-      res.status(status.BAD_REQUEST).send('');
+      res.status(status.BAD_REQUEST).send('fail');
       return;
     }
 

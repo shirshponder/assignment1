@@ -36,7 +36,7 @@ Content-Type: application/json
 
 ### delete post and all its comments
 
-DELETE http://localhost:3000/posts/677e75a2633fe9fc8a32f05b
+DELETE http://localhost:3000/posts/677fe9de62b3029664f9903c
 
 ###########################################################
 ##Comments route
@@ -47,9 +47,9 @@ Content-Type: application/json
 
 {
 
-    "postId": "677e75a2633fe9fc8a32f05b",
+    "postId": "677fe9de62b3029664f9903c",
     "sender": "michali",
-    "content": "4"
+    "content": "2"
 }
 
 ###
@@ -70,11 +70,11 @@ Content-Type: application/json
 GET http://localhost:3000/comments/677d76c31815bd58518421b8
 
 ###
-DELETE http://localhost:3000/comments/677d76c31815bd58518421b8
+DELETE http://localhost:3000/comments/677f9785b1032f6d87baf29e
 
 ### get all comments related to post id
 
-GET http://localhost:3000/comments?postId=677e7367323dd4d7b4fc3791
+GET http://localhost:3000/comments?postId=677fe9de62b3029664f9903c
 
 ###
 

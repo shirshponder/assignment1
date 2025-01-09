@@ -26,12 +26,11 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/posts/6740a2e5c8eb7cf50c7d9d99
+PUT http://localhost:3000/posts/677f9785b1032f6d87baf29e
 Content-Type: application/json
 
 {
-    "title": "update title1",
-    "sender": "moshe",
+    "title": "update title3",
     "content": "update content"
 }
 
@@ -59,12 +58,10 @@ GET http://localhost:3000/comments
 
 ###
 
-PUT http://localhost:3000/comments/677d76c31815bd58518421b8
+PUT http://localhost:3000/comments/677d7cdd4133bd4c06d6a27c
 Content-Type: application/json
 
 {
-    "postId": "677d767e1815bd58518421b6",
-    "sender": "Michali2",
     "content": "new commentsssssssssss"
 }
 

@@ -23,28 +23,6 @@ class PostsController extends BaseController<IPost> {
       res.status(status.BAD_REQUEST).send(error);
     }
   }
-
-  async updatePostById(req: Request, res: Response): Promise<void> {
-    const postId = req.params.id;
-    const postBody = req.body;
-
-    try {
-      const post = await postModel.findByIdAndUpdate(
-        { _id: postId },
-        postBody,
-        {
-          returnDocument: 'after',
-        }
-      );
-      if (post) {
-        res.status(status.OK).send(post);
-      } else {
-        res.status(status.NOT_FOUND).send('Post not found');
-      }
-    } catch (error) {
-      res.status(status.BAD_REQUEST).send(error);
-    }
-  }
 }
 
 export default new PostsController();

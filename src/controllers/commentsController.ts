@@ -9,28 +9,6 @@ class CommentsController extends BaseController<IComments> {
     super(commentsModel);
   }
 
-  async updateCommentById(req: Request, res: Response) {
-    const commentId = req.params.id;
-    const commentBody = req.body;
-
-    try {
-      const comment = await commentsModel.findByIdAndUpdate(
-        { _id: commentId },
-        commentBody,
-        {
-          returnDocument: 'after',
-        }
-      );
-      if (comment) {
-        res.status(status.OK).send(comment);
-      } else {
-        res.status(status.NOT_FOUND).send('Comment not found');
-      }
-    } catch (error) {
-      res.status(status.BAD_REQUEST).send(error);
-    }
-  }
-
   async getAll(req: Request, res: Response) {
     try {
       const postId = req.query.postId;

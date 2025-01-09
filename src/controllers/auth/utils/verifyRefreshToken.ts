@@ -1,6 +1,6 @@
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Document } from 'mongoose';
 import userModel, { IUser } from '../../../models/usersModel';
-import jwt, { JwtPayload } from 'jsonwebtoken';
 
 type IUserDocument = Document<unknown, {}, IUser> &
   IUser &

@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import userModel from '../../models/usersModel';
 import { generateToken } from './utils/generateToken';
 import { verifyRefreshToken } from './utils/verifyRefreshToken';
+import { IUserDocument } from '../../types/IUserDocument';
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -60,23 +61,8 @@ export const login = async (req: Request, res: Response) => {
       res.status(500).send('Server Error');
       return;
     }
-    // generate token
-    const tokens = generateToken(user._id);
 
-    if (!tokens) {
-      res.status(500).send('Server Error');
-      return;
-    }
-
-    const { accessToken, refreshToken } = tokens;
-
-    if (!user.refreshToken) {
-      user.refreshToken = [];
-    }
-    user.refreshToken.push(refreshToken);
-    await user.save();
-
-    res.status(status.OK).send({ accessToken, refreshToken, _id: user._id });
+    await generateAndSaveUser(res, user);
   } catch (err) {
     res.status(status.BAD_REQUEST).send(err);
   }
@@ -86,7 +72,7 @@ export const logout = async (req: Request, res: Response) => {
   try {
     const user = await verifyRefreshToken(req.body.refreshToken);
     await user.save();
-    res.status(status.OK).send('success');
+    res.status(status.OK).send({ _id: user.id });
   } catch (err) {
     res.status(status.BAD_REQUEST).send('fail');
   }
@@ -99,24 +85,31 @@ export const refresh = async (req: Request, res: Response) => {
       res.status(status.BAD_REQUEST).send('');
       return;
     }
+
+    await generateAndSaveUser(res, user);
+  } catch (err) {
+    res.status(status.BAD_REQUEST).send(err);
+  }
+};
+
+const generateAndSaveUser = async (res: Response, user: IUserDocument) => {
+  try {
     const tokens = generateToken(user._id);
 
     if (!tokens) {
       res.status(status.INTERNAL_SERVER_ERROR).send('Server Error');
       return;
     }
+    const { accessToken, refreshToken } = tokens;
+
     if (!user.refreshToken) {
       user.refreshToken = [];
     }
     user.refreshToken.push(tokens.refreshToken);
     await user.save();
-    res.status(status.OK).send({
-      accessToken: tokens.accessToken,
-      refreshToken: tokens.refreshToken,
-      _id: user._id,
-    });
-  } catch (err) {
-    res.status(status.BAD_REQUEST).send(err);
+    res.status(status.OK).send({ accessToken, refreshToken, _id: user._id });
+  } catch (error) {
+    res.status(status.INTERNAL_SERVER_ERROR).send('Server Error');
+    return;
   }
 };
-//Need to add JWT token generation and refresh token logic

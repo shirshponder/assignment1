@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { createExpress } from './createExpress.js';
+import { createExpress } from './createExpress';
 
 const main = async () => {
   const app = await createExpress();

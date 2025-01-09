@@ -1,8 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import postsRoute from './routes/postsRoute.js';
-import commentsRoute from './routes/commentsRoute.js';
-import { connectDatabase } from './config/connectToDatabase.js';
+import postsRoute from './routes/postsRoute';
+import commentsRoute from './routes/commentsRoute';
+import { connectDatabase } from './config/connectToDatabase';
 
 export const createExpress = async () => {
   const app = express();

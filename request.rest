@@ -83,3 +83,15 @@ GET http://localhost:3000/comments?postId=677e7367323dd4d7b4fc3791
 
 GET http://localhost:3000/comments?sender=Mich&postId=677d767e1123815bd58518421b6
 
+###########################################################
+##auth route
+###########################################################
+
+POST http://localhost:3000/auth/register 
+Content-Type: application/json
+
+{
+    "email": "bla@c.com",
+    "username": "mich",
+    "password": "pp"
+}

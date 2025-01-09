@@ -13,7 +13,7 @@ class BaseController<T> {
     try {
       const filters: Record<string, any> = {};
       for (const key in queryFilters) {
-        if (queryFilters[key] !== undefined) {
+        if (!queryFilters[key]) {
           filters[key] = queryFilters[key];
         }
       }

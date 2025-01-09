@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import status from 'http-status';
 import bcrypt from 'bcrypt';
-import userModel, { IUser } from '../models/usersModel';
+import userModel from '../models/usersModel';
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -30,16 +30,20 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  if (!email || !password) {
+    res.status(status.BAD_REQUEST).send('email or password are missing');
+    return;
+  }
+
   try {
-    const user = await userModel.findOne({ email: req.body.email });
+    const user = await userModel.findOne({ email });
     if (!user) {
       res.status(status.BAD_REQUEST).send('wrong username or password');
       return;
     }
-    const validPassword = await bcrypt.compare(
-      req.body.password,
-      user.password
-    );
+    const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
       res.status(status.BAD_REQUEST).send('wrong username or password');
       return;
@@ -51,4 +55,8 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
-export const logout = async (req: Request, res: Response) => {};
+export const logout = async (req: Request, res: Response) => {
+  // need to implement with refresh token
+};
+
+//Need to add JWT token generation and refresh token logic

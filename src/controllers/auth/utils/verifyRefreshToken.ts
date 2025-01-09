@@ -1,0 +1,51 @@
+import { Document } from 'mongoose';
+import userModel, { IUser } from '../../../models/usersModel';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+
+type IUserDocument = Document<unknown, {}, IUser> &
+  IUser &
+  Required<{ _id: string }> & { __v: number };
+
+export const verifyRefreshToken = async (
+  refreshToken: string | undefined,
+): Promise<IUserDocument> => {
+  if (!refreshToken) {
+    throw new Error('refresh token is missing');
+  }
+  if (!process.env.TOKEN_SECRET) {
+    throw new Error('token secret is not configured');
+  }
+
+  try {
+    const payload: JwtPayload = jwt.verify(
+      refreshToken,
+      process.env.TOKEN_SECRET,
+    ) as JwtPayload;
+
+    const userId = payload._id;
+    if (!userId) {
+      throw new Error('invalid refresh token');
+    }
+
+    const user = await userModel.findById(userId);
+    if (!user) {
+      throw new Error('user not found');
+    }
+
+    if (!user.refreshToken || !user.refreshToken.includes(refreshToken)) {
+      user.refreshToken = [];
+      await user.save();
+      throw new Error('Refresh token does not match');
+    }
+
+    user.refreshToken = user.refreshToken.filter(
+      (token) => token !== refreshToken,
+    );
+    await user.save();
+    return user;
+  } catch (err) {
+    throw new Error(
+      err instanceof Error ? err.message : 'invalid refresh token',
+    );
+  }
+};

@@ -13,11 +13,10 @@ class BaseController<T> {
     try {
       const filters: Record<string, any> = {};
       for (const key in queryFilters) {
-        if (!queryFilters[key]) {
+        if (queryFilters[key]) {
           filters[key] = queryFilters[key];
         }
       }
-
       const items = await this.model.find(filters);
       res.status(status.OK).send(items);
     } catch (error) {

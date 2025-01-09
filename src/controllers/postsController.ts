@@ -12,10 +12,9 @@ class PostsController extends BaseController<IPost> {
   async deleteItem(req: Request, res: Response): Promise<void> {
     try {
       const postId = req.params.id;
-      await commentModel.find({ postId }).then((comments) => {
-        comments.forEach(async (comment) => {
-          await commentModel.findByIdAndDelete({ _id: comment._id.toString() });
-        });
+      const comments = await commentModel.find({ postId });
+      comments.forEach(async (comment) => {
+        await commentModel.findByIdAndDelete({ _id: comment._id.toString() });
       });
 
       super.deleteItem(req, res);

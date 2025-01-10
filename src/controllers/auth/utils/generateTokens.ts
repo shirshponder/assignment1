@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { ITokens } from '../../../types/ITokens';
 
-export const generateToken = (userId: string): ITokens | null => {
+export const generateTokens = (userId: string): ITokens | null => {
   if (!process.env.TOKEN_SECRET) {
     return null;
   }

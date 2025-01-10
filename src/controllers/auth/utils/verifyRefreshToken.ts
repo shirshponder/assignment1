@@ -10,10 +10,10 @@ export const verifyRefreshToken = async (
   refreshToken: string | undefined,
 ): Promise<IUserDocument> => {
   if (!refreshToken) {
-    throw new Error('refresh token is missing');
+    throw new Error('Refresh token is missing');
   }
   if (!process.env.TOKEN_SECRET) {
-    throw new Error('token secret is not configured');
+    throw new Error('Token secret is not configured');
   }
 
   try {
@@ -24,12 +24,12 @@ export const verifyRefreshToken = async (
 
     const userId = payload._id;
     if (!userId) {
-      throw new Error('invalid refresh token');
+      throw new Error('Invalid refresh token');
     }
 
     const user = await userModel.findById(userId);
     if (!user) {
-      throw new Error('user not found');
+      throw new Error('User not found');
     }
 
     if (!user.refreshToken || !user.refreshToken.includes(refreshToken)) {
@@ -46,7 +46,7 @@ export const verifyRefreshToken = async (
     return user;
   } catch (err) {
     throw new Error(
-      err instanceof Error ? err.message : 'invalid refresh token',
+      err instanceof Error ? err.message : 'Invalid refresh token',
     );
   }
 };

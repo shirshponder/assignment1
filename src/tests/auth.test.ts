@@ -153,7 +153,7 @@ describe('Auth test - try to send post', () => {
     expect(responseNewPost.statusCode).toBe(201);
   });
 
-  test('Without authorization- faild upload post', async () => {
+  test('Without authorization- failed upload post', async () => {
     const response = await request(app).post('/posts').send({
       title: 'New post',
       content: 'Important content',
@@ -268,7 +268,7 @@ describe('Test timeout token', () => {
     expect(responseNewPost.statusCode).toBe(201);
   });
 
-  test('Faild - time has passed', async () => {
+  test('Failed - time has passed', async () => {
     const responseLogin = await request(app)
       .post(baseUrl + '/login')
       .send(testUser);

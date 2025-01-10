@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import status from 'http-status';
 import bcrypt from 'bcrypt';
 import userModel from '../../models/usersModel';
-import { generateToken } from './utils/generateToken';
 import { verifyRefreshToken } from './utils/verifyRefreshToken';
-import { IUserDocument } from '../../types/IUserDocument';
+import { generateAndSaveUser } from './utils/generateTokenAndSave';
+import { ServerException } from '../../exceptions/ServerException';
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -15,7 +15,7 @@ export const register = async (req: Request, res: Response) => {
     const existingUsername = await userModel.findOne({ username });
 
     if (existingUsername || existingEmail) {
-      res.status(status.BAD_REQUEST).send('username or email already exists');
+      res.status(status.BAD_REQUEST).send('Username or email already exists');
       return;
     }
 
@@ -42,29 +42,36 @@ export const login = async (req: Request, res: Response) => {
     const user = await userModel.findOne({ email });
 
     if (!user) {
-      res.status(status.BAD_REQUEST).send('wrong username or password');
+      res.status(status.BAD_REQUEST).send('Wrong username or password');
       return;
     }
 
     if (!email || !password) {
-      res.status(status.BAD_REQUEST).send('email or password are missing');
+      res.status(status.BAD_REQUEST).send('Email or password are missing');
       return;
     }
 
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      res.status(status.BAD_REQUEST).send('wrong username or password');
+      res.status(status.BAD_REQUEST).send('Wrong username or password');
       return;
     }
 
     if (!process.env.TOKEN_SECRET) {
-      res.status(status.INTERNAL_SERVER_ERROR).send('Server Error');
+      res.status(status.BAD_REQUEST).send('Token secret is not configured');
       return;
     }
 
-    await generateAndSaveUser(res, user);
-  } catch (err) {
-    res.status(status.BAD_REQUEST).send(err);
+    const { accessToken, refreshToken, _id } = await generateAndSaveUser(user);
+    res.status(status.OK).send({ accessToken, refreshToken, _id });
+  } catch (error) {
+    if (error instanceof ServerException) {
+      res.status(error.status).send({
+        error: error.message,
+      });
+      return;
+    }
+    res.status(status.BAD_REQUEST).send('An unexpected error occurred');
   }
 };
 
@@ -73,8 +80,12 @@ export const logout = async (req: Request, res: Response) => {
     const user = await verifyRefreshToken(req.body.refreshToken);
     await user.save();
     res.status(status.OK).send({ _id: user.id });
-  } catch (err) {
-    res.status(status.BAD_REQUEST).send('fail');
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(status.BAD_REQUEST).send(error.message);
+      return;
+    }
+    res.status(status.BAD_REQUEST).send('An unexpected error occurred');
   }
 };
 
@@ -82,34 +93,22 @@ export const refresh = async (req: Request, res: Response) => {
   try {
     const user = await verifyRefreshToken(req.body.refreshToken);
     if (!user) {
-      res.status(status.BAD_REQUEST).send('fail');
+      res.status(status.BAD_REQUEST).send('Invalid refresh token');
       return;
     }
 
-    await generateAndSaveUser(res, user);
-  } catch (err) {
-    res.status(status.BAD_REQUEST).send(err);
-  }
-};
-
-const generateAndSaveUser = async (res: Response, user: IUserDocument) => {
-  try {
-    const tokens = generateToken(user._id);
-
-    if (!tokens) {
-      res.status(status.INTERNAL_SERVER_ERROR).send('Server Error');
-      return;
-    }
-    const { accessToken, refreshToken } = tokens;
-
-    if (!user.refreshToken) {
-      user.refreshToken = [];
-    }
-    user.refreshToken.push(tokens.refreshToken);
-    await user.save();
-    res.status(status.OK).send({ accessToken, refreshToken, _id: user._id });
+    const { accessToken, refreshToken, _id } = await generateAndSaveUser(user);
+    res.status(status.OK).send({ accessToken, refreshToken, _id });
   } catch (error) {
-    res.status(status.INTERNAL_SERVER_ERROR).send('Server Error');
-    return;
+    if (error instanceof ServerException) {
+      res.status(error.status).send({
+        error: error.message,
+      });
+      return;
+    } else if (error instanceof Error) {
+      res.status(status.BAD_REQUEST).send(error.message);
+      return;
+    }
+    res.status(status.BAD_REQUEST).send('An unexpected error occurred');
   }
 };

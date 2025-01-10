@@ -1,8 +1,8 @@
 import request from 'supertest';
-import { createExpress } from '../createExpress';
-import mongoose from 'mongoose';
-import postModel from '../models/postsModel';
 import { Express } from 'express';
+import mongoose from 'mongoose';
+import { createExpress } from '../createExpress';
+import postModel from '../models/postsModel';
 import userModel, { IUser } from '../models/usersModel';
 
 var app: Express;

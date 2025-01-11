@@ -48,7 +48,6 @@ describe('Posts Tests', () => {
     expect(response.body.length).toBe(0);
   });
 
-  // TODO: add sender is not exist
   test('Create new post and comment', async () => {
     const responseNewPost = await request(app)
       .post('/posts')
@@ -198,12 +197,12 @@ describe('Posts Tests', () => {
       .put(`/posts/${postId}`)
       .set({ authorization: `JWT ${testUser.accessToken}` })
       .send({
-        title: 'Updated Titleeeeeeee',
+        title: 'Updated titleeeeeeee',
         content: 'Updated content',
       });
     expect(response.statusCode).toBe(status.OK);
     expect(response.body).toMatchObject({
-      title: 'Updated Titleeeeeeee',
+      title: 'Updated titleeeeeeee',
       content: 'Updated content',
       sender: testUser._id,
     });

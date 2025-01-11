@@ -16,7 +16,6 @@ class PostsController extends BaseController<IPost> {
       const sender = req.body.sender;
 
       if (sender) {
-        // TODO: check it
         if (mongoose.Types.ObjectId.isValid(sender)) {
           const user = await userModel.findOne({
             _id: new mongoose.Types.ObjectId(sender),

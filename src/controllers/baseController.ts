@@ -17,6 +17,7 @@ class BaseController<T> {
           filters[key] = queryFilters[key];
         }
       }
+
       const items = await this.model.find(filters);
       res.status(status.OK).send(items);
     } catch (error) {
@@ -29,10 +30,11 @@ class BaseController<T> {
 
     try {
       const item = await this.model.findById(id);
+
       if (item) {
         res.status(status.OK).send(item);
       } else {
-        res.status(status.NOT_FOUND).send('not found');
+        res.status(status.NOT_FOUND).send('Item not found');
       }
     } catch (error) {
       res.status(status.BAD_REQUEST).send(error);

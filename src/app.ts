@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { createExpress } from './createExpress';
 
 const main = async () => {

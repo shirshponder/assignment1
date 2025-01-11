@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import BaseController from './baseController';
 import userModel, { IUser } from '../models/usersModel';
-import { register } from './authController';
+import { register } from './auth/authController';
 
 class UsersController extends BaseController<IUser> {
   constructor() {

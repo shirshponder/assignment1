@@ -1,6 +1,6 @@
 
 ###########################################################
-##posts route
+## Posts route
 ###########################################################
 
 GET http://localhost:3000/posts
@@ -39,7 +39,7 @@ Content-Type: application/json
 DELETE http://localhost:3000/posts/677fe9de62b3029664f9903c
 
 ###########################################################
-##Comments route
+## Comments route
 ###########################################################
 
 POST http://localhost:3000/comments
@@ -81,7 +81,7 @@ GET http://localhost:3000/comments?postId=677fe9de62b3029664f9903c
 GET http://localhost:3000/comments?sender=Mich&postId=677d767e1123815bd58518421b6
 
 ###########################################################
-##auth route
+## Auth route
 ###########################################################
 
 POST http://localhost:3000/auth/register 
@@ -105,7 +105,7 @@ Content-Type: application/json
 
 
 ###########################################################
-##users route
+## Users route
 ###########################################################
 
 ### Get all users

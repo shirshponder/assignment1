@@ -56,7 +56,7 @@ class BaseController<T> {
         { _id: id },
         {
           returnDocument: 'after',
-        }
+        },
       );
 
       if (deletedItem) {
@@ -77,7 +77,7 @@ class BaseController<T> {
       const updatedItem = await this.model.findByIdAndUpdate(
         { _id: id },
         body,
-        { returnDocument: 'after' }
+        { returnDocument: 'after' },
       );
       if (updatedItem) {
         res.status(status.OK).send(updatedItem);

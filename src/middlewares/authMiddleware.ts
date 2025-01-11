@@ -1,6 +1,7 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 import status from 'http-status';
+import userModel from '../models/usersModel';
 
 export const authMiddleware = (
   req: Request,
@@ -19,13 +20,19 @@ export const authMiddleware = (
     return;
   }
 
-  jwt.verify(token, process.env.TOKEN_SECRET, (err, payload) => {
+  jwt.verify(token, process.env.TOKEN_SECRET, async (err, payload) => {
     if (err) {
       res.status(status.UNAUTHORIZED).send('Access Denied');
       return;
     }
 
-    req.params.userId = (payload as JwtPayload)._id;
+    req.body.payload = { userId: (payload as JwtPayload)._id };
+    const user = await userModel.findById(req.body.payload.userId);
+    if (!user) {
+      res.status(status.NOT_FOUND).send('User not found');
+      return;
+    }
+
     next();
   });
 };

@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon --exec ts-node src/app.ts",
     "test": "tsc && jest --detectOpenHandles --forceExit",
-    "testAuth": "cp .env.test.local .env && jest --detectOpenHandles --forceExit auth.test.ts --coverage",
+    "test:coverage": "tsc && jest --detectOpenHandles --forceExit --coverage",
+    "testAuth": "cp .env.test.local .env && jest --detectOpenHandles --forceExit auth.test.ts",
+    "testPosts": "cp .env.test.local .env && jest --detectOpenHandles --forceExit posts.test.ts",
     "start": "tsc && node dist/app.js",
     "lint": "eslint . --ext .ts",
     "devstart": "nodemon ./src/app.ts"

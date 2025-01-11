@@ -7,7 +7,7 @@ GET http://localhost:3000/posts
 
 ###
 
-GET http://localhost:3000/posts?sender=Michali
+GET http://localhost:3000/posts?sender=67815b9697a75440c50555cd
 
 ###
 
@@ -20,7 +20,7 @@ Content-Type: application/json
 
 {
     "title": "sdsdirs",
-    "sender": "Michali",
+    "sender": "67815b9697a75440c50555cd",
     "content": "Shir is the best"
 }
 
@@ -48,7 +48,7 @@ Content-Type: application/json
 {
 
     "postId": "677fe9de62b3029664f9903c",
-    "sender": "michali",
+    "sender": "67815b9697a75440c50555cd",
     "content": "2"
 }
 
@@ -78,7 +78,7 @@ GET http://localhost:3000/comments?postId=677fe9de62b3029664f9903c
 
 ###
 
-GET http://localhost:3000/comments?sender=Mich&postId=677d767e1123815bd58518421b6
+GET http://localhost:3000/comments?sender=67815b9697a75440c50555cd&postId=677d767e1123815bd58518421b6
 
 ###########################################################
 ## Auth route

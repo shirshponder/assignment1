@@ -5,17 +5,17 @@ import { createExpress } from '../createExpress';
 import postModel from '../models/postsModel';
 import userModel, { IUser } from '../models/usersModel';
 
-var app: Express;
+let app: Express;
 
 beforeAll(async () => {
-  console.log('beforeAll');
+  console.log('before all auth tests');
   app = await createExpress();
   await userModel.deleteMany();
   await postModel.deleteMany();
 });
 
 afterAll((done) => {
-  console.log('afterAll');
+  console.log('after all auth tests');
   mongoose.connection.close();
   done();
 });

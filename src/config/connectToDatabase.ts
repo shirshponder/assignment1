@@ -6,7 +6,7 @@ export const connectDatabase = async () => {
       throw 'DB_CONNECT is not defined in .env file';
     } else {
       await mongoose.connect(process.env.DB_CONNECT, {
-        serverSelectionTimeoutMS: 10000,
+        serverSelectionTimeoutMS: 5000,
       });
 
       console.log('Connected to database');

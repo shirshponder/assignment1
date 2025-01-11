@@ -54,7 +54,6 @@ describe('Posts Tests', () => {
     expect(response.body.length).toBe(0);
   });
 
-  // TODO: add sender is not exist
   test('Create new post and comment', async () => {
     const responseNewPost = await requestWithAuth.post('/posts').send({
       title: 'New Post 1',

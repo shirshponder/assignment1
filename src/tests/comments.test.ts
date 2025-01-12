@@ -62,13 +62,14 @@ describe('Comments Tests', () => {
     postId = responseNewPost.body._id;
     const responseNewComment = await requestWithAuth.post('/comments').send({
       content: 'This is a comment',
-      sender: 'Shir',
+      sender: testUser._id,
       postId,
     });
+
     expect(responseNewComment.statusCode).toBe(status.CREATED);
     expect(responseNewComment.body).toMatchObject({
       content: 'This is a comment',
-      sender: 'Shir',
+      sender: testUser._id,
       postId,
     });
 
@@ -78,7 +79,7 @@ describe('Comments Tests', () => {
   test('Create a comment for a non-existent post', async () => {
     const response = await requestWithAuth.post('/comments').send({
       content: 'This is a comment',
-      sender: 'Shir',
+      sender: testUser._id,
       postId: '222222222222222222222222',
     });
     expect(response.statusCode).toBe(status.NOT_FOUND);
@@ -92,7 +93,9 @@ describe('Comments Tests', () => {
   });
 
   test('Get comments by sender', async () => {
-    const response = await requestWithAuth.get('/comments?sender=Shir');
+    const response = await requestWithAuth.get(
+      `/comments?sender=${testUser._id}`
+    );
     expect(response.statusCode).toBe(status.OK);
     expect(response.body.length).toBe(1);
   });
@@ -108,7 +111,7 @@ describe('Comments Tests', () => {
     expect(response.statusCode).toBe(status.OK);
     expect(response.body).toMatchObject({
       content: 'This is a comment',
-      sender: 'Shir',
+      sender: testUser._id,
       postId,
     });
   });
@@ -120,7 +123,7 @@ describe('Comments Tests', () => {
 
   test('Get comments by a nonexistent postId', async () => {
     const response = await requestWithAuth.get(
-      '/comments?postId=222222222222222222222222',
+      '/comments?postId=222222222222222222222222'
     );
     expect(response.statusCode).toBe(status.NOT_FOUND);
     expect(response.text).toBe('Post not found');
@@ -131,7 +134,7 @@ describe('Comments Tests', () => {
     expect(response.statusCode).toBe(status.OK);
 
     const responseCheckIfDelted = await requestWithAuth.get(
-      `/comments/${commentId}`,
+      `/comments/${commentId}`
     );
     expect(responseCheckIfDelted.statusCode).toBe(status.NOT_FOUND);
     expect(responseCheckIfDelted.text).toBe('Item not found');
@@ -140,13 +143,13 @@ describe('Comments Tests', () => {
   test('Update a comment', async () => {
     const responseNewComment = await requestWithAuth.post('/comments').send({
       content: 'This is a comment',
-      sender: 'Shir',
+      sender: testUser._id,
       postId,
     });
     expect(responseNewComment.statusCode).toBe(status.CREATED);
     expect(responseNewComment.body).toMatchObject({
       content: 'This is a comment',
-      sender: 'Shir',
+      sender: testUser._id,
       postId,
     });
 
@@ -157,7 +160,7 @@ describe('Comments Tests', () => {
     expect(response.statusCode).toBe(status.OK);
     expect(response.body).toMatchObject({
       content: 'Updated comment',
-      sender: 'Shir',
+      sender: testUser._id,
       postId,
       _id: commentId,
     });

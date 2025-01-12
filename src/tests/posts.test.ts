@@ -136,7 +136,7 @@ describe('Posts Tests', () => {
 
   test('Delete Post', async () => {
     const responseCheckComments1 = await requestWithAuth.get(
-      `/comments?postId=${postId}`,
+      `/comments?postId=${postId}`
     );
 
     expect(responseCheckComments1.body.length).toBe(1);
@@ -146,13 +146,13 @@ describe('Posts Tests', () => {
     expect(response.statusCode).toBe(status.OK);
 
     const responseFindDeletedPost = await requestWithAuth.get(
-      `/posts/${postId}`,
+      `/posts/${postId}`
     );
 
     expect(responseFindDeletedPost.statusCode).toBe(status.NOT_FOUND);
 
     const responseCheckComments = await requestWithAuth.get(
-      `/comments?postId=${postId}`,
+      `/comments?postId=${postId}`
     );
 
     expect(responseCheckComments.statusCode).toBe(status.NOT_FOUND);

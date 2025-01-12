@@ -103,7 +103,7 @@ describe('Posts Tests', () => {
     expect(response.text).toBe('User not found');
   });
 
-  test('Login fail - user not found', async () => {
+  test('Failed to create post - access token is valid but user does not exist', async () => {
     const testUser = {
       email: 'test1@user.com',
       username: 'test1',

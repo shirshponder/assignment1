@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import status from 'http-status';
 import { Model } from 'mongoose';
-import userModel from '../models/usersModel';
+import userModel, { IUser } from '../models/usersModel';
 
 class BaseController<T> {
   model: Model<T>;
@@ -45,32 +45,24 @@ class BaseController<T> {
 
   async create(req: Request, res: Response) {
     const sender = req.body.sender;
+    let user: IUser | null = null;
 
     if (sender) {
       if (mongoose.Types.ObjectId.isValid(sender)) {
-        const user = await userModel.findOne({
-          _id: new mongoose.Types.ObjectId(sender),
-        });
-        if (!user) {
-          res.status(status.NOT_FOUND).send('User not found');
-          return;
-        }
+        user = await userModel.findById(sender);
       } else {
-        const user = await userModel.findOne({ username: sender });
-        if (user) {
-          req.body.sender = user._id.toString();
-        } else {
-          res.status(status.NOT_FOUND).send('User not found');
-          return;
-        }
+        user = await userModel.findOne({ username: sender });
       }
     } else {
       const userId = req.body.payload.userId;
-      const post = {
-        ...req.body,
-        sender: userId,
-      };
-      req.body = post;
+      user = await userModel.findById(userId);
+    }
+
+    if (user) {
+      req.body.sender = user.username;
+    } else {
+      res.status(status.NOT_FOUND).send('User not found');
+      return;
     }
 
     const body = req.body;

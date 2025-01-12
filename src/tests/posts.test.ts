@@ -58,13 +58,13 @@ describe('Posts Tests', () => {
     const responseNewPost = await requestWithAuth.post('/posts').send({
       title: 'New Post 1',
       content: 'New Content 1',
-      sender: testUser._id,
+      sender: testUser.username,
     });
     expect(responseNewPost.statusCode).toBe(status.CREATED);
     expect(responseNewPost.body).toMatchObject({
       title: 'New Post 1',
       content: 'New Content 1',
-      sender: testUser._id,
+      sender: testUser.username,
     });
 
     postId = responseNewPost.body._id;
@@ -87,7 +87,7 @@ describe('Posts Tests', () => {
     expect(response.body).toMatchObject({
       title: 'New Post 2',
       content: 'New Content 2',
-      sender: testUser._id,
+      sender: testUser.username,
     });
   });
 
@@ -107,18 +107,20 @@ describe('Posts Tests', () => {
     expect(response.body).toMatchObject({
       content: 'New Content 1',
       title: 'New Post 1',
-      sender: testUser._id,
+      sender: testUser.username,
     });
   });
 
   test('Get post by sender', async () => {
-    const response = await requestWithAuth.get(`/posts?sender=${testUser._id}`);
+    const response = await requestWithAuth.get(
+      `/posts?sender=${testUser.username}`
+    );
     expect(response.statusCode).toBe(status.OK);
     expect(response.body.length).toBe(2);
     expect(response.body[0]).toMatchObject({
       content: 'New Content 1',
       title: 'New Post 1',
-      sender: testUser._id,
+      sender: testUser.username,
     });
   });
 
@@ -126,7 +128,7 @@ describe('Posts Tests', () => {
     const responseNewPost = await requestWithAuth.post('/posts').send({
       title: 'New Post 3',
       content: 'New Content 3',
-      sender: testUser._id,
+      sender: testUser.username,
     });
     expect(responseNewPost.statusCode).toBe(status.CREATED);
     const response = await requestWithAuth.get('/posts');
@@ -136,7 +138,7 @@ describe('Posts Tests', () => {
 
   test('Delete Post', async () => {
     const responseCheckComments1 = await requestWithAuth.get(
-      `/comments?postId=${postId}`,
+      `/comments?postId=${postId}`
     );
 
     expect(responseCheckComments1.body.length).toBe(1);
@@ -146,13 +148,13 @@ describe('Posts Tests', () => {
     expect(response.statusCode).toBe(status.OK);
 
     const responseFindDeletedPost = await requestWithAuth.get(
-      `/posts/${postId}`,
+      `/posts/${postId}`
     );
 
     expect(responseFindDeletedPost.statusCode).toBe(status.NOT_FOUND);
 
     const responseCheckComments = await requestWithAuth.get(
-      `/comments?postId=${postId}`,
+      `/comments?postId=${postId}`
     );
 
     expect(responseCheckComments.statusCode).toBe(status.NOT_FOUND);
@@ -182,7 +184,7 @@ describe('Posts Tests', () => {
     expect(response.body).toMatchObject({
       title: 'Updated titleeeeeeee',
       content: 'Updated content',
-      sender: testUser._id,
+      sender: testUser.username,
     });
   });
 });

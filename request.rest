@@ -1,5 +1,5 @@
 ### JWT Token 
-@jwtToken=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgzY2ZjMTZhNzVmZWFkZTQzZWVkMzEiLCJyYW5kb20iOiIwLjkxNDE0OTA0NjAxODIxODkiLCJpYXQiOjE3MzY2OTE2NTIsImV4cCI6MTczNjcwMjQ1Mn0.unb_Qwr_4Y5ff70GY5wDomrTXp_Rg3sRSatvQNtqWPE
+@jwtToken=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgzZTM0ZTA2YWRhYmMxODQ0NTFiY2EiLCJyYW5kb20iOiIwLjYwMTUzMzYzMzQyOTA4OTUiLCJpYXQiOjE3MzY2OTY2NTUsImV4cCI6MTczNjcwNzQ1NX0.AwEYdevOk0i4sswb7I-HdrU9OMM_mWw0D0RxUGWieHE
 
 
 ###########################################################
@@ -27,6 +27,7 @@ Content-Type: application/json
 
 {
     "title": "sdsdirs",
+    "sender": "mich",
     "content": "Shir is the best"
 }
 
@@ -56,7 +57,7 @@ Content-Type: application/json
 
 {
 
-    "postId": "6782c77fd4ee7407d84065b2",
+    "postId": "6783e37406adabc184451bd4",
     "sender": "mich",
     "content": "2"
 }
@@ -64,6 +65,11 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/comments
+Authorization: {{jwtToken}}
+
+### get comments by sender
+
+GET http://localhost:3000/comments?sender=mich
 Authorization: {{jwtToken}}
 
 ###

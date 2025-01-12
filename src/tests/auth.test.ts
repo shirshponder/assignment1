@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { createExpress } from '../createExpress';
 import postModel from '../models/postsModel';
 import userModel, { IUser } from '../models/usersModel';
+import status from 'http-status';
 
 let app: Express;
 
@@ -163,14 +164,50 @@ describe('Auth test refresh', () => {
     testUser.refreshToken = response.body.refreshToken;
   });
 
-  test('Double use refresh token', async () => {
+  test('Fail to refresh and get tokens due to server error', async () => {
+    const originalTokenExpires = process.env.TOKEN_EXPIRES;
+    const originalRefreshTokenExpires = process.env.REFRESH_TOKEN_EXPIRES;
+    process.env.TOKEN_EXPIRES = '';
+    process.env.REFRESH_TOKEN_EXPIRES = '';
+
     const response = await request(app).post(`${baseUrl}/refresh`).send({
-      refreshToken: testUser.refreshToken,
+      refreshToken: testUser.refreshToken, // Assuming a valid refresh token for the test
     });
-    expect(response.statusCode).toBe(200);
+
+    expect(response.statusCode).toBe(status.INTERNAL_SERVER_ERROR);
+
+    expect(response.body.error).toBe('Server error'); // Example error message
+    process.env.TOKEN_EXPIRES = originalTokenExpires;
+    process.env.REFRESH_TOKEN_EXPIRES = originalRefreshTokenExpires;
+  });
+
+  test('Double use refresh token', async () => {
+    const responseLogin = await request(app)
+      .post(`${baseUrl}/login`)
+      .send(testUser);
+
+    expect(responseLogin.statusCode).toBe(200);
+    const accessToken = responseLogin.body.accessToken;
+    const refreshToken = responseLogin.body.refreshToken;
+
+    expect(accessToken).toBeDefined();
+    expect(refreshToken).toBeDefined();
+    expect(responseLogin.body._id).toBeDefined();
+
+    testUser.accessToken = accessToken;
+    testUser.refreshToken = refreshToken;
+    testUser._id = responseLogin.body._id;
+
+    const firstAttemptResponse = await request(app)
+      .post(`${baseUrl}/refresh`)
+      .send({
+        refreshToken: testUser.refreshToken,
+      });
+
+    expect(firstAttemptResponse.statusCode).toBe(200);
 
     // get new refresh token
-    const newRefreshToken = response.body.refreshToken;
+    const newRefreshToken = firstAttemptResponse.body.refreshToken;
 
     const secondAttemptResponse = await request(app)
       .post(`${baseUrl}/refresh`)
@@ -181,12 +218,14 @@ describe('Auth test refresh', () => {
     // remove all refresh token and reset to empty array
     expect(secondAttemptResponse.statusCode).not.toBe(200);
 
-    const response3 = await request(app).post(`${baseUrl}/refresh`).send({
-      refreshToken: newRefreshToken,
-    });
+    const responseRemoveRefreshToken = await request(app)
+      .post(`${baseUrl}/refresh`)
+      .send({
+        refreshToken: newRefreshToken,
+      });
 
     // no refresh tokens
-    expect(response3.statusCode).not.toBe(200);
+    expect(responseRemoveRefreshToken.statusCode).not.toBe(200);
   });
 });
 

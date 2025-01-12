@@ -10,6 +10,7 @@
     "testAuth": "cp .env.test.local .env && jest --detectOpenHandles --forceExit auth.test.ts",
     "testPosts": "cp .env.test.local .env && jest --detectOpenHandles --forceExit posts.test.ts",
     "testComments": "cp .env.test.local .env && jest --detectOpenHandles --forceExit comments.test.ts",
+    "testUsers": "cp .env.test.local .env && jest --detectOpenHandles --forceExit users.test.ts",
     "start": "tsc && node dist/app.js",
     "lint": "eslint . --ext .ts",
     "devstart": "nodemon ./src/app.ts"

@@ -147,8 +147,8 @@ Authorization: {{jwtToken}}
 Content-Type: application/json
 
 {
-    "email": "new@a.b",
-    "username": "new1",
+    "email": "new2@a.b",
+    "username": "new2",
     "password": "new"
 }
 

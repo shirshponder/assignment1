@@ -29,31 +29,6 @@ const router = Router();
  * @swagger
  * components:
  *   schemas:
- *     User:
- *       type: object
- *       required:
- *         - email
- *         - password
- *       properties:
- *         email:
- *           type: string
- *           description: The user email
- *         username:
- *           type: string
- *           description: The user username
- *         password:
- *           type: string
- *           description: The user password
- *       example:
- *         email: 'shir@gmail.com'
- *         username: 'shir'
- *         password: '987654'
- */
-
-/**
- * @swagger
- * components:
- *   schemas:
  *     LoginUser:
  *       type: object
  *       required:
@@ -67,8 +42,8 @@ const router = Router();
  *           type: string
  *           description: The user password
  *       example:
- *         email: 'shir@gmail.com'
- *         password: '987654'
+ *         email: 'user@gmail.com'
+ *         password: '$2b$10$IeHzC7B4xTyEmUQRJ/BXfuo6JmaPqlo/KiT2E78gRD1CTKVzNReLe'
  */
 
 /**

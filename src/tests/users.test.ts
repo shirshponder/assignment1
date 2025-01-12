@@ -7,7 +7,7 @@ import status from 'http-status';
 import Test from 'supertest/lib/test';
 import TestAgent from 'supertest/lib/agent';
 
-var app: Express;
+let app: Express;
 let requestWithAuth: TestAgent<Test>;
 
 type User = IUser & {

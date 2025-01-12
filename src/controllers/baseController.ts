@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import status from 'http-status';
 import { Model } from 'mongoose';
+import userModel from '../models/usersModel';
 
 class BaseController<T> {
   model: Model<T>;
@@ -42,7 +44,37 @@ class BaseController<T> {
   }
 
   async create(req: Request, res: Response) {
+    const sender = req.body.sender;
+
+    if (sender) {
+      if (mongoose.Types.ObjectId.isValid(sender)) {
+        const user = await userModel.findOne({
+          _id: new mongoose.Types.ObjectId(sender),
+        });
+        if (!user) {
+          res.status(status.NOT_FOUND).send('User not found');
+          return;
+        }
+      } else {
+        const user = await userModel.findOne({ username: sender });
+        if (user) {
+          req.body.sender = user._id.toString();
+        } else {
+          res.status(status.NOT_FOUND).send('User not found');
+          return;
+        }
+      }
+    } else {
+      const userId = req.body.payload.userId;
+      const post = {
+        ...req.body,
+        sender: userId,
+      };
+      req.body = post;
+    }
+
     const body = req.body;
+
     try {
       const item = await this.model.create(body);
       res.status(status.CREATED).send(item);
@@ -58,7 +90,7 @@ class BaseController<T> {
         { _id: id },
         {
           returnDocument: 'after',
-        },
+        }
       );
 
       if (deletedItem) {
@@ -79,7 +111,7 @@ class BaseController<T> {
       const updatedItem = await this.model.findByIdAndUpdate(
         { _id: id },
         body,
-        { returnDocument: 'after' },
+        { returnDocument: 'after' }
       );
       if (updatedItem) {
         res.status(status.OK).send(updatedItem);

@@ -59,7 +59,7 @@ class BaseController<T> {
     }
 
     if (user) {
-      req.body.sender = user.username;
+      req.body.sender = user._id;
     } else {
       res.status(status.NOT_FOUND).send('User not found');
       return;

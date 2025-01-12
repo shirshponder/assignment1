@@ -62,14 +62,14 @@ describe('Comments Tests', () => {
     postId = responseNewPost.body._id;
     const responseNewComment = await requestWithAuth.post('/comments').send({
       content: 'This is a comment',
-      sender: testUser.username,
+      sender: testUser._id,
       postId,
     });
 
     expect(responseNewComment.statusCode).toBe(status.CREATED);
     expect(responseNewComment.body).toMatchObject({
       content: 'This is a comment',
-      sender: testUser.username,
+      sender: testUser._id,
       postId,
     });
 
@@ -79,7 +79,7 @@ describe('Comments Tests', () => {
   test('Create a comment for a non-existent post', async () => {
     const response = await requestWithAuth.post('/comments').send({
       content: 'This is a comment',
-      sender: testUser.username,
+      sender: testUser._id,
       postId: '222222222222222222222222',
     });
     expect(response.statusCode).toBe(status.NOT_FOUND);
@@ -94,7 +94,7 @@ describe('Comments Tests', () => {
 
   test('Get comments by sender', async () => {
     const response = await requestWithAuth.get(
-      `/comments?sender=${testUser.username}`
+      `/comments?sender=${testUser._id}`
     );
     expect(response.statusCode).toBe(status.OK);
     expect(response.body.length).toBe(1);
@@ -111,7 +111,7 @@ describe('Comments Tests', () => {
     expect(response.statusCode).toBe(status.OK);
     expect(response.body).toMatchObject({
       content: 'This is a comment',
-      sender: testUser.username,
+      sender: testUser._id,
       postId,
     });
   });
@@ -143,13 +143,13 @@ describe('Comments Tests', () => {
   test('Update a comment', async () => {
     const responseNewComment = await requestWithAuth.post('/comments').send({
       content: 'This is a comment',
-      sender: testUser.username,
+      sender: testUser._id,
       postId,
     });
     expect(responseNewComment.statusCode).toBe(status.CREATED);
     expect(responseNewComment.body).toMatchObject({
       content: 'This is a comment',
-      sender: testUser.username,
+      sender: testUser._id,
       postId,
     });
 
@@ -160,7 +160,7 @@ describe('Comments Tests', () => {
     expect(response.statusCode).toBe(status.OK);
     expect(response.body).toMatchObject({
       content: 'Updated comment',
-      sender: testUser.username,
+      sender: testUser._id,
       postId,
       _id: commentId,
     });

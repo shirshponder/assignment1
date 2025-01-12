@@ -58,13 +58,13 @@ describe('Posts Tests', () => {
     const responseNewPost = await requestWithAuth.post('/posts').send({
       title: 'New Post 1',
       content: 'New Content 1',
-      sender: testUser.username,
+      sender: testUser._id,
     });
     expect(responseNewPost.statusCode).toBe(status.CREATED);
     expect(responseNewPost.body).toMatchObject({
       title: 'New Post 1',
       content: 'New Content 1',
-      sender: testUser.username,
+      sender: testUser._id,
     });
 
     postId = responseNewPost.body._id;
@@ -87,7 +87,7 @@ describe('Posts Tests', () => {
     expect(response.body).toMatchObject({
       title: 'New Post 2',
       content: 'New Content 2',
-      sender: testUser.username,
+      sender: testUser._id,
     });
   });
 
@@ -107,20 +107,18 @@ describe('Posts Tests', () => {
     expect(response.body).toMatchObject({
       content: 'New Content 1',
       title: 'New Post 1',
-      sender: testUser.username,
+      sender: testUser._id,
     });
   });
 
   test('Get post by sender', async () => {
-    const response = await requestWithAuth.get(
-      `/posts?sender=${testUser.username}`
-    );
+    const response = await requestWithAuth.get(`/posts?sender=${testUser._id}`);
     expect(response.statusCode).toBe(status.OK);
     expect(response.body.length).toBe(2);
     expect(response.body[0]).toMatchObject({
       content: 'New Content 1',
       title: 'New Post 1',
-      sender: testUser.username,
+      sender: testUser._id,
     });
   });
 
@@ -128,7 +126,7 @@ describe('Posts Tests', () => {
     const responseNewPost = await requestWithAuth.post('/posts').send({
       title: 'New Post 3',
       content: 'New Content 3',
-      sender: testUser.username,
+      sender: testUser._id,
     });
     expect(responseNewPost.statusCode).toBe(status.CREATED);
     const response = await requestWithAuth.get('/posts');
@@ -184,7 +182,7 @@ describe('Posts Tests', () => {
     expect(response.body).toMatchObject({
       title: 'Updated titleeeeeeee',
       content: 'Updated content',
-      sender: testUser.username,
+      sender: testUser._id,
     });
   });
 });

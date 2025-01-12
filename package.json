@@ -5,8 +5,8 @@
   "main": "dist/app.js",
   "scripts": {
     "dev": "nodemon --exec ts-node src/app.ts",
-    "test": "tsc && jest --detectOpenHandles --forceExit",
-    "test:coverage": "tsc && jest --detectOpenHandles --forceExit --coverage",
+    "test": "tsc && cp .env.test.local .env && jest --detectOpenHandles --forceExit",
+    "test:coverage": "tsc && cp .env.test.local .env && jest --detectOpenHandles --forceExit --coverage",
     "testAuth": "cp .env.test.local .env && jest --detectOpenHandles --forceExit auth.test.ts",
     "testPosts": "cp .env.test.local .env && jest --detectOpenHandles --forceExit posts.test.ts",
     "testComments": "cp .env.test.local .env && jest --detectOpenHandles --forceExit comments.test.ts",

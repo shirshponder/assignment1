@@ -131,8 +131,9 @@ router.get('/:id', usersController.getById.bind(usersController));
  *           schema:
  *             type: object
  *             required:
- *               - title
- *               - content
+ *               - email
+ *               - username
+ *               - password
  *             properties:
  *                email:
  *                  type: string
@@ -208,22 +209,17 @@ router.delete('/:id', usersController.deleteItem.bind(usersController));
  *       content:
  *         application/json:
  *           schema:
- *             oneOf:
- *               - type: object
- *                 required:
- *                   - username
- *                   - email
- *                   - password
- *                 properties:
- *                   username:
- *                     type: string
- *                     description: The new username of the user
- *                   email:
- *                     type: string
- *                     description: The new email of the user
- *                   password:
- *                     type: string
- *                     description: The new password of the user
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: The new username of the user
+ *               email:
+ *                 type: string
+ *                 description: The new email of the user
+ *               password:
+ *                 type: string
+ *                 description: The new password of the user
  *     responses:
  *       '200':
  *         description: User updated successfully

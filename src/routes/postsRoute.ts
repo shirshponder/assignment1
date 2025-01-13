@@ -198,9 +198,6 @@ router.delete('/:id', postsController.deleteItem.bind(postsController));
  *         application/json:
  *           schema:
  *             type: object
- *             required:
- *               - content
- *               - title
  *             properties:
  *               content:
  *                 type: string

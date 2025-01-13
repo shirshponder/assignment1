@@ -5,12 +5,12 @@
   "main": "dist/app.js",
   "scripts": {
     "dev": "nodemon --exec ts-node src/app.ts",
-    "test": "tsc && cp .env.test.local .env && jest --detectOpenHandles --forceExit",
-    "test:coverage": "tsc && cp .env.test.local .env && jest --detectOpenHandles --forceExit --coverage",
-    "testAuth": "cp .env.test.local .env && jest --detectOpenHandles --forceExit auth.test.ts",
-    "testPosts": "cp .env.test.local .env && jest --detectOpenHandles --forceExit posts.test.ts",
-    "testComments": "cp .env.test.local .env && jest --detectOpenHandles --forceExit comments.test.ts",
-    "testUsers": "cp .env.test.local .env && jest --detectOpenHandles --forceExit users.test.ts",
+    "test": "tsc && jest --detectOpenHandles --forceExit",
+    "test:coverage": "tsc && jest --detectOpenHandles --forceExit --coverage",
+    "testAuth": "jest --detectOpenHandles --forceExit auth.test.ts",
+    "testPosts": "jest --detectOpenHandles --forceExit posts.test.ts",
+    "testComments": "jest --detectOpenHandles --forceExit comments.test.ts",
+    "testUsers": "jest --detectOpenHandles --forceExit users.test.ts",
     "start": "tsc && node dist/app.js",
     "lint": "eslint . --ext .ts",
     "devstart": "nodemon ./src/app.ts"

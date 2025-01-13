@@ -7,6 +7,7 @@ import userModel, { IUser } from '../models/usersModel';
 import status from 'http-status';
 import Test from 'supertest/lib/test';
 import TestAgent from 'supertest/lib/agent';
+import commentModel from '../models/commentsModel';
 
 let app: Express;
 let requestWithAuth: TestAgent<Test>;
@@ -27,6 +28,7 @@ beforeAll(async () => {
   app = await createExpress();
   await postModel.deleteMany();
   await userModel.deleteMany();
+  await commentModel.deleteMany();
 
   await request(app).post('/auth/register').send(testUser);
   const responseLogin = await request(app).post('/auth/login').send(testUser);
@@ -99,6 +101,30 @@ describe('Posts Tests', () => {
     });
     expect(response.statusCode).toBe(status.NOT_FOUND);
     expect(response.text).toBe('User not found');
+  });
+
+  test('Failed to create post - access token is valid but user does not exist', async () => {
+    const testUser = {
+      email: 'test1@user.com',
+      username: 'test1',
+      password: 'test1',
+    };
+    await request(app).post('/auth/register').send(testUser);
+    const responseLogin = await request(app).post('/auth/login').send(testUser);
+    await requestWithAuth.delete(`/users/${responseLogin.body._id}`);
+
+    const responseNewPost = await request(app)
+      .post('/posts')
+      .set({
+        authorization: `JWT ${responseLogin.body.accessToken}`,
+      })
+      .send({
+        title: 'New Post',
+        content: 'Importent content',
+        sender: 'shir',
+      });
+    expect(responseNewPost.statusCode).toBe(status.NOT_FOUND);
+    expect(responseNewPost.text).toBe('User not found');
   });
 
   test('Get post by id', async () => {

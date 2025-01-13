@@ -125,6 +125,23 @@ Content-Type: application/json
     "password": "pp"
 }
 
+###
+
+POST http://localhost:3000/auth/logout
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzg0MzYyNDI1ZTUyYjQ4MGIyMGUyMzkiLCJyYW5kb20iOiIwLjE2OTU1NTk3MTI5OTM3MDQiLCJpYXQiOjE3MzY3MTgwNjYsImV4cCI6MTczNzMyMjg2Nn0.ImPlUQ8Nm_6wIr7TOhTA6WFJ-9PKOKj_TChLIEAp9X8"
+}
+
+###
+
+POST http://localhost:3000/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzg0MzYyNDI1ZTUyYjQ4MGIyMGUyMzkiLCJyYW5kb20iOiIwLjkyMDE5OTAwNjkxMjAwOSIsImlhdCI6MTczNjcxODEyOCwiZXhwIjoxNzM3MzIyOTI4fQ.NxjiIw3DFMERyPfM4ivTIn6cjW5b3kzewYBu8wrL-pk"
+}
 
 ###########################################################
 ## Users route

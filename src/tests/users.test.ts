@@ -22,7 +22,7 @@ const testUser: User = {
 };
 
 beforeAll(async () => {
-  console.log('before all usres tests');
+  console.log('before all users tests');
   app = await createExpress();
   await userModel.deleteMany();
 
@@ -74,14 +74,14 @@ describe('Users Tests', () => {
 
   test('Get user by id - not found', async () => {
     const response = await requestWithAuth.get(
-      '/users/222222222222222222222222'
+      '/users/222222222222222222222222',
     );
     expect(response.statusCode).toBe(status.NOT_FOUND);
   });
 
   test('Get user by email', async () => {
     const response = await requestWithAuth.get(
-      `/users?email=${testUser.email}`
+      `/users?email=${testUser.email}`,
     );
     expect(response.statusCode).toBe(status.OK);
     expect(response.body.length).toBe(1);
@@ -95,7 +95,7 @@ describe('Users Tests', () => {
 
   test('Get user by username', async () => {
     const response = await requestWithAuth.get(
-      `/users?username=${testUser.username}`
+      `/users?username=${testUser.username}`,
     );
     expect(response.statusCode).toBe(status.OK);
     expect(response.body.length).toBe(1);
@@ -220,7 +220,7 @@ describe('Users Tests', () => {
     expect(responseNewUser.statusCode).toBe(status.OK);
 
     const response = await requestWithAuth.delete(
-      `/users/${responseNewUser.body._id}`
+      `/users/${responseNewUser.body._id}`,
     );
     expect(response.statusCode).toBe(status.OK);
     expect(response.body._id).toBe(responseNewUser.body._id);

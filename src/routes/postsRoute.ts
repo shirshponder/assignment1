@@ -164,6 +164,10 @@ router.post('/', postsController.create.bind(postsController));
  *     responses:
  *       '200':
  *         description: Post deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Post'
  *       '404':
  *         description: Post not found
  *       '500':
@@ -193,21 +197,14 @@ router.delete('/:id', postsController.deleteItem.bind(postsController));
  *       content:
  *         application/json:
  *           schema:
- *             oneOf:
- *               - type: object
- *                 required:
- *                   - content
- *                 properties:
- *                   content:
- *                     type: string
- *                     description: The new content of the post
- *               - type: object
- *                 required:
- *                   - title
- *                 properties:
- *                   title:
- *                     type: string
- *                     description: The new title of the post
+ *             type: object
+ *             properties:
+ *               content:
+ *                 type: string
+ *                 description: The new content of the post
+ *               title:
+ *                 type: string
+ *                 description: The new title of the post
  *     responses:
  *       '200':
  *         description: Post updated successfully
@@ -220,6 +217,7 @@ router.delete('/:id', postsController.deleteItem.bind(postsController));
  *       '500':
  *         description: Server error
  */
+
 router.put('/:id', postsController.updateItem.bind(postsController));
 
 export default router;

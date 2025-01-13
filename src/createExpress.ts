@@ -23,20 +23,22 @@ export const createExpress = async () => {
   app.use('/users', authMiddleware, usersRoute);
   const port = process.env.PORT;
 
-  const options = {
-    definition: {
-      openapi: '3.0.0',
-      info: {
-        title: 'Web Dev 2025 REST API - Assignment 2',
-        version: '1.0.0',
-        description: 'REST server including authentication using JWT',
+  if (process.env.NODE_ENV == 'development') {
+    const options = {
+      definition: {
+        openapi: '3.0.0',
+        info: {
+          title: 'Web Dev 2025 REST API - Assignment 2',
+          version: '1.0.0',
+          description: 'REST server including authentication using JWT',
+        },
+        servers: [{ url: `http://localhost:${port}` }],
       },
-      servers: [{ url: `http://localhost:${port}` }],
-    },
-    apis: ['./src/routes/*.ts'],
-  };
-  const specs = swaggerJsDoc(options);
-  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
+      apis: ['./src/routes/*.ts'],
+    };
+    const specs = swaggerJsDoc(options);
+    app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
+  }
 
   return app;
 };
